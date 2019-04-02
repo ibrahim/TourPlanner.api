@@ -1,0 +1,5 @@
+steps:
+  - name: 'gcr.io/cloud-community-builders/make'
+    args: ['build']
+  - name: 'gcr.io/cloud-builders/docker'
+    args: ['build', '-t', 'gcr.io/vspegypt/cms.pwa', '-f', './build/Dockerfile', '.']

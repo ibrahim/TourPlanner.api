@@ -1,0 +1,10 @@
+{
+  "apiKey":  "service:ibrahim-4725:q9yQRjg8pRcdM3QbMQvDNA",
+  "logging": { "level": "INFO" },
+  "origins": [{
+    "http": { "url": "http://localhost:5555/graphql" }
+  }],
+  "frontends": [{
+    "host": "localhost", "port": 3001, "endpoints": ["/graphql"]
+  }]
+}

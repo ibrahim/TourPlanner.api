@@ -1,0 +1,27 @@
+octopus:
+  environments:
+    - development
+    - production
+  default: &default
+    adapter: mysql2
+    username: <%= ENV['CONF_DB_USER'] %>
+    password: <%= ENV['CONF_DB_PASSWORD'] %>
+    pool: 5
+    timeout: 5000
+    host: mysql
+  development:
+    shards:
+      "www.ugo-holiday.com":
+        <<: *default
+        database: cms
+      "snefro.vspegypt.com":
+        <<: *default
+        database: snefro
+  production:
+    shards:
+      "www.ugo-holiday.com":
+        <<: *default
+        database: cms
+      "snefro.vspegypt.com":
+        <<: *default
+        database: snefro

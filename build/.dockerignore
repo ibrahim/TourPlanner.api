@@ -1,0 +1,5 @@
+.git
+.dockerignore
+public/photos
+public/files
+Gemfile.lock

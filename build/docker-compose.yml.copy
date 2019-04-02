@@ -1,0 +1,107 @@
+version: "3"
+services:
+  haproxy:
+    image: haproxy:alpine
+    container_name: haproxy
+    links:
+      - cmsapi
+      - nginx
+      - cmsapp
+    volumes:
+      - /home/ia_ibrahim/cms.api/build/haproxy:/usr/local/etc/haproxy:ro
+    ports:
+      - "80:80"
+    networks:
+      - cms_net
+  static:
+    image: nginx:latest
+    container_name: static
+    volumes:
+      - /home/ia_ibrahim/cms.api/build/static_nginx.conf:/etc/nginx/nginx.conf:ro
+      - filesvol:/usr/share/nginx/html/files
+      - photosvol:/usr/share/nginx/html/photos
+    expose:
+      - 80
+    networks:
+      - cms_net
+  nginx:
+    image: jwilder/nginx-proxy:alpine
+    container_name: nginx
+    volumes:
+      - /var/run/docker.sock:/tmp/docker.sock:ro
+    expose:
+      - 80
+    networks:
+      - cms_net
+  jperiod:
+    image: gcr.io/vspegypt/jperiod.pwa
+    container_name: jperiod
+    environment:
+      VIRTUAL_HOST: ugo-holiday.com,www.ugo-holiday.com
+    expose:
+      - 80
+    volumes:
+      - filesvol:/app/public/files
+      - photosvol:/app/public/photos
+    networks:
+      - cms_net
+  cmsapp:
+    image: gcr.io/vspegypt/cmsapp
+    container_name: cmsapp
+    expose:
+      - 80
+    volumes:
+      - filesvol:/app/public/files
+      - photosvol:/app/public/photos
+    networks:
+      - cms_net
+  cmsapi:
+    image: gcr.io/vspegypt/cmsapi
+    container_name: cmsapi
+    depends_on:
+      - mysql
+    expose:
+      - 3000
+    links:
+      - mysql
+    environment:
+      SECRET_TOKEN: 4fa5f65a4405326435dbf55dffcd50a73d5304a8251c5b84aad33076ff30e26865d48074611bcf486c7a542bcfd348e363fffeda7fcddfe9929316f3a88522
+      CONF_GOOGL_APIKEY: AIzaSyDS24JZREa9L_WFPCSQJzPfdvzK0QfbT7g
+      SENDGRID_API_KEY: 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
+      ENGINE_API_KEY: service:ibrahim-4725:q9yQRjg8pRcdM3QbMQvDNA
+      CONF_DB_HOST: mysql
+      CONF_DB_NAME: cms
+      CONF_DB_USER: root
+      CONF_DB_PASSWORD: 123456
+    volumes:
+      - filesvol:/app/public/files
+      - photosvol:/app/public/photos
+    networks:
+      - cms_net
+  mysql:
+    image: mariadb
+    container_name: mysql
+    ports:
+      - "33066:3306"
+    environment:
+      MYSQL_ROOT_PASSWORD: 123456
+      MYSQL_USER: root
+      MYSQL_HOST: mysql
+    volumes:
+      - cmsdatavol:/var/lib/mysql
+    networks:
+      - cms_net
+  
+volumes:
+  cmsdatavol:
+  filesvol:
+  photosvol:
+
+networks:
+  cms_net:
+
+# networks:
+#   default:
+#     external:
+#       name: cms_net
+
