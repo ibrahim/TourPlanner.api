@@ -35,6 +35,8 @@ class User < ApplicationRecord
     # :confirmable
 
 
+  has_many :trips
+
   validates_presence_of :password, :on => :create
   validates_presence_of :email
   validates_uniqueness_of :email

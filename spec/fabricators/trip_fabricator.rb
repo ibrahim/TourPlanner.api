@@ -25,13 +25,14 @@
 #  fk_rails_...  (user_id => users.id)
 #
 
-class Trip < ApplicationRecord
-  has_many :events, class_name: "Event::Base"
-  has_many :activities, class_name: "Event::Activity"
-  has_many :flights, class_name: "Event::Flight"
-  has_many :transportations, class_name: "Event::Transportation"
-  has_many :cruises, class_name: "Event::Cruise"
-  has_many :informations, class_name: "Event::Information"
-  has_many :lodgings, class_name: "Event::Lodging"
-  belongs_to :user
+Fabricator(:trip) do
+  description "Lovely trip"
+  name "Cairo Trip"
+  price "90"
+  activities(count: 1, fabricator: :activity)
+  lodgings(count: 1, fabricator: :lodging)
+  flights(count: 1, fabricator: :flight)
+  transportations(count: 1, fabricator: :transportation)
+  cruises(count: 1, fabricator: :cruise)
+  informations(count: 1, fabricator: :information)
 end
