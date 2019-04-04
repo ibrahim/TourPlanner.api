@@ -49,9 +49,6 @@ gem 'mime-types', require: 'mime/types'
 
 gem 'devise'
 gem 'devise-jwt'
-gem 'devise-specs', group: :development
-gem "json_matchers", group: :test
-gem 'rspec-graphql_matchers', group: :test
 
 gem 'globalize', git: 'https://github.com/globalize/globalize'
 gem 'activemodel-serializers-xml'
@@ -61,11 +58,22 @@ gem 'active_delegate'
 
 gem 'will_paginate'
 gem "google_url_shortener", :require => 'google_url_shortener'
-
 gem 'dotenv-rails', :groups => [:development, :test]
 gem 'annotate', group: :development
-gem 'rspec-rails', '~> 3.8', group: :development
-gem 'fabrication'
+
+group :development, :test do
+  gem 'rspec-rails', '~> 3.8', group: :development
+  gem 'devise-specs', group: :development
+  gem "json_matchers", group: :test
+  gem 'rspec-graphql_matchers', group: :test
+  gem 'guard-rspec', require: false, group: :development
+  gem 'growl'
+  # gem 'growl_notify'
+  gem "terminal-notifier"
+  gem 'terminal-notifier-guard'
+  gem 'fabrication'
+end
+
 # Use Capistrano for deployment
 # gem 'capistrano-rails', group: :development
 
