@@ -1,10 +1,10 @@
-require "apollo/tracing"
+# require "apollo/tracing"
 
 ApiSchema = GraphQL::Schema.define do
-  tracer GraphQL::Tracing::ActiveSupportNotificationsTracing
+  # tracer GraphQL::Tracing::ActiveSupportNotificationsTracing
   use GraphQL::Backtrace
   use GraphQL::Batch
-  use ApolloTracing.new
+  # use ApolloTracing.new
   #query_execution_strategy GraphQL::Batch::ExecutionStrategy
   enable_preloading
   # max_depth 12
@@ -56,10 +56,10 @@ end
 log_query_complexity = GraphQL::Analysis::QueryComplexity.new { |query, complexity| Rails.logger.info("[GraphQL Query Complexity] #{complexity}")}
 ApiSchema.query_analyzers << log_query_complexity
 
-ApiSchema.query_analyzers << GraphQL::Analysis::FieldUsage.new { |query, used_fields, used_deprecated_fields|
-  puts "Used GraphQL fields: #{used_fields.join(', ')}"
-  puts "Used deprecated GraphQL fields: #{used_deprecated_fields.join(', ')}"
-}
+# ApiSchema.query_analyzers << GraphQL::Analysis::FieldUsage.new { |query, used_fields, used_deprecated_fields|
+#   puts "Used GraphQL fields: #{used_fields.join(', ')}"
+#   puts "Used deprecated GraphQL fields: #{used_deprecated_fields.join(', ')}"
+# }
 
 
 # GraphQL::Errors.configure(ApiSchema) do

@@ -14,7 +14,7 @@ Types::TripType = GraphQL::ObjectType.define do
     # argument :limit, types.Int
     # preload  :frames
     resolve ->(trip, args, ctx) {
-        trip.events #.sort{|a,b| a.lft <=> b.lft}
+      trip.events.all
     }
   end
 end

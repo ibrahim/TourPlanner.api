@@ -2,6 +2,7 @@ Types::UserType = GraphQL::ObjectType.define do
   name "User"
   field :id, types.ID
   field :email, types.String
+
   field :trips, types[Types::TripType] do
     argument :status, types.String
     argument :limit, types.Int

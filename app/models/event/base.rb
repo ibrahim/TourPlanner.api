@@ -30,5 +30,8 @@ class Event::Base < ApplicationRecord
   translates :title, :notes, :details
   belongs_to :trip
 
+  def event_type
+    self[:type].split("::").last
+  end
   #(0..100).map{|q| q * 15 * 60}.map{|q| p ActiveSupport::Duration.build(q).parts}
 end
