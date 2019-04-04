@@ -1,10 +1,11 @@
+require 'jwt'
+
 class ApplicationController < ActionController::API
     before_action :set_locale
     #protect_from_forgery with: :exception
 
-
     around_action :select_shard
-    # before_action :get_domain
+    before_action :current_user
 
     def select_shard(&block)
       # changes shard based on subdomain of host. 
@@ -29,6 +30,47 @@ class ApplicationController < ActionController::API
     def set_locale
       I18n.locale = params[:locale] || I18n.default_locale
     end
+
+    def current_user
+      return @current_user if @current_user
+      if auth_present?
+        user = User.where( id: auth.first["sub"]).first
+        if user
+          @current_user ||= user
+          return @current_user
+        end
+      end
+    end
+
+    def authenticate
+      render json: {error: "unauthorized"}, status: 401 unless logged_in?
+    end
+
+    private
+    
+    def token
+      request.env["HTTP_AUTHORIZATION"].to_s.scan(/Bearer (.*)$/).flatten.last
+    end
+    
+    def auth
+      JWT.decode(token.to_s, ENV["DEVISE_JWT_SECRET_KEY"].to_s, true) || []
+    end
+    
+    def auth_present?
+      !!request.env.fetch("HTTP_AUTHORIZATION", "").to_s.scan(/Bearer/).flatten.first
+    end
+
+    # def current_user
+    #   return @current_user if @current_user
+    #   token = request.headers["Authorization"].to_s.split(" ").last
+    #   request.headers.each do |k,v|
+    #     $stderr.puts "#{k}" #, request.headers[k]
+    #   end
+    #   if token
+    #     decoded_token = JWT.decode(token, ENV["DEVISE_JWT_SECRET_KEY"], true)
+    #     raise decoded_token
+    #   end
+    # end
 
     # def get_domain
     #   request_host = request.host

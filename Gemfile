@@ -34,6 +34,7 @@ gem 'i18n', '~> 0.9.3'
 gem 'graphql' , '1.7.14'
 gem 'graphql-batch'
 gem 'graphql-preload'
+gem 'graphql-errors'
 gem 'apollo-tracing'
 gem 'mysql2'
 # gem "punching_bag"
@@ -50,6 +51,7 @@ gem 'devise'
 gem 'devise-jwt'
 gem 'devise-specs', group: :development
 gem "json_matchers", group: :test
+gem 'rspec-graphql_matchers', group: :test
 
 gem 'globalize', git: 'https://github.com/globalize/globalize'
 gem 'activemodel-serializers-xml'

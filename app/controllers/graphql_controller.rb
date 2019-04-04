@@ -4,10 +4,10 @@ class GraphqlController < ApplicationController
   def execute
     variables = ensure_hash(params[:variables])
     query = params[:query]
+    # Query context goes here, for example:
+    # current_site: current_site,
     context = {
-      # Query context goes here, for example:
-      # current_user: current_user,
-      current_site: current_site,
+      current_user: current_user,
       remote_ip: request.remote_ip
     }
     result = ApiSchema.execute(query, variables: variables, context: context)
