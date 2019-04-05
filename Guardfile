@@ -29,7 +29,7 @@ guard :rspec, cmd: "bundle exec rspec" do
   dsl = Guard::RSpec::Dsl.new(self)
 
   # notification :growl_notify
-  notification :terminal_notifier if `uname` =~ /Darwin/
+  #notification :terminal_notifier if `uname` =~ /Darwin/
   # Feel free to open issues for suggestions and improvements
 
   # RSpec files

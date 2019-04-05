@@ -3,17 +3,41 @@ require 'graphql'
 require 'devise/jwt/test_helpers'
 
 current_user_query = "{ current_user { email } }"
+snippets_fragments = <<-EOS
+... on Info {
+  _type
+  title
+  icon
+}
+... on Place {
+  _type
+  title
+  vicinity
+  lat               
+  lng                   
+  name                  
+  icon                  
+  types                 
+  formatted_phone_number
+  formatted_address 
+  address_components    
+  rating                
+  url                   
+  reference             
+}
+EOS
 user_trips_query = <<-EOS
   { current_user {
       trips {
         name
         events {
-          ... on Activity { event_type title price }    
-          ... on Lodging  { event_type title price }    
-          ... on Flight   { event_type title price }    
-          ... on Transportation { event_type title price }    
-          ... on Cruise { event_type title price }    
-          ... on Information { event_type title }    
+        ... on Activity       { _type title price snippets { #{snippets_fragments} }}
+        ... on Lodging        { _type title price snippets { #{snippets_fragments} }}    
+        ... on Flight         { _type title price snippets { #{snippets_fragments} }}    
+        ... on Transportation { _type title price snippets { #{snippets_fragments} }}    
+        ... on Cruise         { _type title price snippets { #{snippets_fragments} }}    
+        ... on Information    { _type title       snippets { #{snippets_fragments} }}    
+        ... on Dining         { _type title       snippets { #{snippets_fragments} }}    
         }
       }
     }
@@ -64,14 +88,34 @@ RSpec.describe 'GraphQl API', type: :request do
       post "/graphql", params:  { "query" => user_trips_query }.to_json, headers: @auth_headers
       @response_body = JSON.parse(response.body)
     end
+    it "should not return errors" do
+      expect(@response_body["errors"]).to eq(nil)
+    end
     it "should return user's trips" do
-      expect(@response_body["data"]["current_user"]["trips"][0]["name"]).to eq("Cairo Trip")
+      _user = @response_body["data"]["current_user"]
+      _trips = _user["trips"]
+      _trip = _trips[0]
+      _name = _trip["name"]
+      expect(_name).to eq("Cairo Trip")
     end
     it "should return all events types for user's trip" do
       events = @response_body["data"]["current_user"]["trips"][0]["events"]
       aggregate_failures "trip events" do
-        expect(events.count).to eq(6)
-        expect(events.map{|e| e["event_type"]}).to match_array(["Activity","Lodging","Flight","Transportation","Cruise","Information"])
+        expect(events.count).to eq(EVENTS_TYPES.length)
+        expect(events.map{|e| e["_type"]}).to match_array(EVENTS_TYPES.map{|t| t.to_s.singularize.capitalize})
+      end
+    end
+    it "should return all snippets types for user's trip events" do
+      #snippets = @response_body["data"]["current_user"]["trips"][0]["activities"][0]["snippets"]
+      _user = @response_body["data"]["current_user"]
+      _trips    = _user["trips"]
+      _trip     = _trips[0]
+      _events   = _trip["events"]
+      _activity = _events[0]
+      snippets = _activity["snippets"]
+      aggregate_failures "events snippets" do
+        expect(snippets.count).to eq(SNIPPETS_TYPES.length)
+        expect(snippets.map{|e| e["_type"]}).to match_array(SNIPPETS_TYPES.map{|t| t.to_s.singularize.capitalize})
       end
     end
   end

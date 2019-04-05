@@ -35,4 +35,5 @@ Fabricator(:trip) do
   transportations(count: 1, fabricator: :transportation)
   cruises(count: 1, fabricator: :cruise)
   informations(count: 1, fabricator: :information)
+  dinings(count: 1, fabricator: :dining)
 end

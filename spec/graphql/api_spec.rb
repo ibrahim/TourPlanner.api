@@ -1,13 +1,14 @@
 require 'rails_helper'
 
 describe Types::UserType do
-  it 'defines a field trips for use' do
-    expect(subject).to have_field(:trips).that_returns([Types::TripType])
+  context "Graphql User Type" do 
+    it 'defines a field trips' do
+      expect(subject).to have_field(:trips).that_returns([Types::TripType])
+    end
+    # it { is_expected.to have_field(:id).of_type("ID!") }
+    # it { is_expected.to have_a_field(:id).returning("ID!") }
   end
 
-  # Fluent alternatives
-  # it { is_expected.to have_field(:id).of_type("ID!") }
-  # it { is_expected.to have_a_field(:id).returning("ID!") }
 end
 describe Types::TripType do
   it 'defines a field events for trips' do
