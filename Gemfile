@@ -21,7 +21,6 @@ gem 'puma', '~> 3.7'
 # gem 'therubyracer', platforms: :ruby
 gem "listen"
 gem 'ar-octopus'
-gem "store_attribute", "~>0.5.0"
 gem 'tzinfo-data' #, platforms: [:mingw, :mswin, :x64_mingw, :jruby]
 # Build JSON APIs with ease. Read more: https://github.com/rails/jbuilder
 gem 'jbuilder', '~> 2.5'
@@ -46,10 +45,11 @@ gem 'awesome_nested_set', git: 'https://github.com/collectiveidea/awesome_nested
 gem 'rack-cors', :require => 'rack/cors'
 gem 'sendgrid-ruby'
 gem 'mime-types', require: 'mime/types'
-
+gem 'bitfields'
+gem "store_attribute", "~>0.5.0"
 gem 'devise'
 gem 'devise-jwt'
-
+gem 'activerecord-typedstore'
 gem 'globalize', git: 'https://github.com/globalize/globalize'
 gem 'activemodel-serializers-xml'
 gem 'active_delegate'
@@ -60,11 +60,14 @@ gem 'will_paginate'
 gem "google_url_shortener", :require => 'google_url_shortener'
 gem 'dotenv-rails', :groups => [:development, :test]
 gem 'annotate', group: :development
+gem 'cancancan'
 
 group :development, :test do
   gem 'rspec-rails', '~> 3.8', group: :development
   gem 'devise-specs', group: :development
   gem "json_matchers", group: :test
+  gem 'shoulda-matchers'
+  gem 'rails-controller-testing'
   gem 'rspec-graphql_matchers', group: :test
   gem 'guard-rspec', require: false, group: :development
   gem 'growl'

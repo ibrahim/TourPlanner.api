@@ -15,6 +15,7 @@
 #  remember_created_at    :datetime
 #  reset_password_sent_at :datetime
 #  reset_password_token   :string(255)
+#  roles_mask             :integer          default(0), not null
 #  sign_in_count          :integer          default(0), not null
 #  created_at             :datetime         not null
 #  updated_at             :datetime         not null
@@ -26,13 +27,25 @@
 #
 
 class User < ApplicationRecord
-  # Include default devise modules. Others available are:
-  # :confirmable, :lockable, :timeoutable, :trackable and :omniauthable
+  
+  include Bitfields
+
+  bitfield :roles_mask, 
+    1 => :admin, 
+    2 => :marketing_officer, 
+    4 => :sales_manager,
+    8 => :sales_officer 
+
+  ROLES = [ :admin, :marketing_officer, :sales_manager, :sales_officer ]
+
   devise :database_authenticatable, :registerable, :jwt_authenticatable, jwt_revocation_strategy: JWTBlacklist
+
     # :recoverable, 
     # :rememberable, 
     # :validatable, 
     # :confirmable
+  # Include default devise modules. Others available are:
+  # :confirmable, :lockable, :timeoutable, :trackable and :omniauthable
 
 
   has_many :trips
@@ -43,4 +56,5 @@ class User < ApplicationRecord
   # def jwt_payload
   #   { 'foo' => 'bar' }
   # end
+
 end
