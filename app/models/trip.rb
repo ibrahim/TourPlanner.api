@@ -33,5 +33,6 @@ class Trip < ApplicationRecord
   has_many :cruises, class_name: "Event::Cruise"
   has_many :informations, class_name: "Event::Information"
   has_many :lodgings, class_name: "Event::Lodging"
+  has_many :dinings, class_name: "Event::Dining"
   belongs_to :user
 end

@@ -5,6 +5,7 @@
 #  id         :bigint(8)        not null, primary key
 #  currency   :string(255)
 #  day        :integer
+#  details    :text(65535)
 #  duration   :integer
 #  price      :integer
 #  starts_at  :string(255)
@@ -24,5 +25,8 @@
 #
 
 class Event::Cruise < Event::Base
+  include Events
   belongs_to :trip
+  DETAILS = [:booked_through, :confirmation, :carrier, :cabin_type, :cabin_number]
+  store :details, accessors: DETAILS, coder: JSON
 end

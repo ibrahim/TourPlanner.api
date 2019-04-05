@@ -5,6 +5,7 @@
 #  id         :bigint(8)        not null, primary key
 #  currency   :string(255)
 #  day        :integer
+#  details    :text(65535)
 #  duration   :integer
 #  price      :integer
 #  starts_at  :string(255)
@@ -24,14 +25,9 @@
 #
 
 class Event::Base < ApplicationRecord
-
-  self.table_name = "events"
-
-  translates :title, :notes, :details
-  belongs_to :trip
-
-  def event_type
-    self[:type].split("::").last
-  end
+  
+  include Events
+  
+  
   #(0..100).map{|q| q * 15 * 60}.map{|q| p ActiveSupport::Duration.build(q).parts}
 end
