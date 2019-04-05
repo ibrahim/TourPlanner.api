@@ -10,7 +10,7 @@ module Snippets
   class_methods do
   end
   
-  def snippet_type
+  def __type
     self[:type].split("::").last
   end
 end
