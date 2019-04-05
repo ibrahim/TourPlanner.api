@@ -1,4 +1,3 @@
-# class Types::BaseUnion < GraphQL::Schema::Union
 Types::EventType = GraphQL::UnionType.define do
   name "Event"
   possible_types [
@@ -7,7 +6,8 @@ Types::EventType = GraphQL::UnionType.define do
     Types::FlightType, 
     Types::TransportationType, 
     Types::CruiseType, 
-    Types::InformationType
+    Types::InformationType,
+    Types::DiningType
   ]
   resolve_type -> (object, ctx) do
     case object.class.name
@@ -23,6 +23,8 @@ Types::EventType = GraphQL::UnionType.define do
         Types::CruiseType
       when "Event::Information"
         Types::InformationType
+      when "Event::Dining"
+        Types::DiningType
     end
   end
 end

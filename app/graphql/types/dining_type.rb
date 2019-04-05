@@ -1,5 +1,5 @@
-Types::TransportationType = GraphQL::ObjectType.define do
-  name "Transportation"
+Types::DiningType = GraphQL::ObjectType.define do
+  name "Dining"
   field :_type, types.String, property: :__type
   field :title, types.String
   field :price, types.String
