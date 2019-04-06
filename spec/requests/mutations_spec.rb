@@ -1,6 +1,8 @@
 require 'rails_helper'
 require 'graphql'
 require 'devise/jwt/test_helpers'
+# include GraphqlTestHelper
+
 
 RSpec.describe 'GraphQl Mutations', type: :request do
   let(:url) { '/gaphql' }
@@ -36,14 +38,14 @@ RSpec.describe 'GraphQl Mutations', type: :request do
       #{{{ input
     let(:input){
       input = { 
-            status: 0,
-            name: "Nice Trip",
-            start_at: "2018-09-10",
-            price: "starting from 1200 USD",
-            description: "Very nice trip indeed",
-            download_pdf: true,
-            messaging: true,
-            overview_map: true
+            status:        0,
+            name:          "Nice Trip",
+            start_at:      "2018-09-10",
+            price:         "starting from 1200 USD",
+            description:   "Very nice trip indeed",
+            download_pdf:  true,
+            messaging:     true,
+            overview_map:  true
           } 
     }
       #}}}
