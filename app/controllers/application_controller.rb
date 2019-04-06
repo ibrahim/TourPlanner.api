@@ -34,7 +34,7 @@ class ApplicationController < ActionController::API
     def current_user
       return @current_user if @current_user
       if auth_present?
-        user = User.where( id: auth.first["sub"]).first
+        user = User.where( id: auth_user_binary_id ).first
         if user
           @current_user ||= user
           return @current_user
@@ -42,6 +42,10 @@ class ApplicationController < ActionController::API
       end
     end
 
+    def auth_user_binary_id
+      user_uuid = auth.first["sub"]
+      User.id_binary(user_uuid)
+    end
     def authenticate
       render json: {error: "unauthorized"}, status: 401 unless logged_in?
     end
@@ -91,7 +95,7 @@ class ApplicationController < ActionController::API
 
     def render_resource(resource)
       if resource.errors.empty?
-        render json: resource
+        render json: resource, except: [:id]
       else
         validation_error(resource)
       end

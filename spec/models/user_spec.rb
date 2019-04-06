@@ -2,7 +2,7 @@
 #
 # Table name: users
 #
-#  id                     :bigint(8)        not null, primary key
+#  id                     :binary(16)       not null, primary key
 #  confirmation_sent_at   :datetime
 #  confirmation_token     :string(255)
 #  confirmed_at           :datetime
@@ -17,6 +17,7 @@
 #  reset_password_token   :string(255)
 #  roles_mask             :integer          default(0), not null
 #  sign_in_count          :integer          default(0), not null
+#  uuid                   :string(36)
 #  created_at             :datetime         not null
 #  updated_at             :datetime         not null
 #

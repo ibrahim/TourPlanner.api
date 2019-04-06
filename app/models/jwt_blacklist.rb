@@ -2,7 +2,7 @@
 #
 # Table name: jwt_blacklist
 #
-#  id  :bigint(8)        not null, primary key
+#  id  :binary(16)       not null, primary key
 #  exp :datetime         not null
 #  jti :string(255)      not null
 #

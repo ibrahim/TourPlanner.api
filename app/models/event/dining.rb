@@ -2,7 +2,7 @@
 #
 # Table name: events
 #
-#  id         :bigint(8)        not null, primary key
+#  id         :binary(16)       not null, primary key
 #  currency   :string(255)
 #  day        :integer
 #  details    :text(65535)
@@ -11,17 +11,10 @@
 #  starts_at  :string(255)
 #  timezone   :string(255)
 #  type       :string(255)
+#  uuid       :string(36)
 #  created_at :datetime         not null
 #  updated_at :datetime         not null
-#  trip_id    :bigint(8)
-#
-# Indexes
-#
-#  index_events_on_trip_id  (trip_id)
-#
-# Foreign Keys
-#
-#  fk_rails_...  (trip_id => trips.id)
+#  trip_id    :binary(16)
 #
 
 class Event::Dining < Event::Base

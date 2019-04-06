@@ -28,7 +28,7 @@ gem 'jbuilder', '~> 2.5'
 # gem 'redis', '~> 3.0'
 # Use ActiveModel has_secure_password
 # gem 'bcrypt', '~> 3.1.7'
-
+gem 'simple_uuid'
 gem 'i18n', '~> 0.9.3'
 gem 'graphql' , '1.7.14'
 gem 'graphql-batch'

@@ -2,7 +2,7 @@
 #
 # Table name: trips
 #
-#  id           :bigint(8)        not null, primary key
+#  id           :binary(16)       not null, primary key
 #  description  :text(65535)
 #  download_pdf :boolean
 #  messaging    :boolean
@@ -11,18 +11,14 @@
 #  price        :string(255)
 #  start_at     :date
 #  status       :integer
+#  uuid         :string(36)
 #  created_at   :datetime         not null
 #  updated_at   :datetime         not null
-#  user_id      :bigint(8)
+#  user_id      :binary(16)
 #
 # Indexes
 #
-#  index_trips_on_status   (status)
-#  index_trips_on_user_id  (user_id)
-#
-# Foreign Keys
-#
-#  fk_rails_...  (user_id => users.id)
+#  index_trips_on_status  (status)
 #
 
 Fabricator(:trip) do
