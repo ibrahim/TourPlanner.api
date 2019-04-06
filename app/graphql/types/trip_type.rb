@@ -4,6 +4,7 @@ Types::TripType = GraphQL::ObjectType.define do
   field :name, types.String
   field :start_at, types.String
   field :price, types.String
+  field :currency, types.String
   field :description, types.String
   field :download_pdf, types.Boolean
   field :messaging, types.Boolean
