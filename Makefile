@@ -11,24 +11,43 @@ migrate_test:
 	rails db:migrate RAILS_ENV=test;
 
 createdbuser:
-	docker exec -it mysqleight mysql -u root -p123456 -e 'create user "tourfax" identified by "123456"; GRANT ALL ON *.* TO "tourfax"@"%";'
+	docker exec -it mysql mysql -u root -p123456 -e 'create user "tourfax" identified by "123456"; GRANT ALL ON *.* TO "tourfax"@"%";'
 
 initdb: dropdb createdb
 
 createdb:
-	docker exec -it mysqleight mysql -u root -p123456 -e 'create database tourfax; create database tourfax_test;'
+	docker exec -it mysql mysql -u root -p123456 -e 'create database tourfax; create database tourfax_test;'
 
 dropdb:
-	docker exec -it mysqleight mysql -u root -p123456 -e 'drop database tourfax; drop database tourfax_test;'
-
-mysqli:
-	docker exec -it mysqleight mysql -u root -p
+	docker exec -it mysql mysql -u root -p123456 -e 'drop database tourfax; drop database tourfax_test;'
 
 mysql:
-	docker exec -it mysqleight mysql -u tourfax -p -h 127.0.0.1
+	docker exec -it mysql mysql -u root -p123456 -D tourfax
 
 mysqld:
-	docker run --rm -p 3306:3306 -v /Users/ibrahim/srv/git/ugotours/tours.api/data/:/var/lib/mysql -e MYSQL_ROOT_PASSWORD=123456 -d --name mysqleight mysql/mysql-server --default-authentication-plugin=mysql_native_password
+	docker run --rm -p 3306:3306 -v /Users/ibrahim/srv/git/ugotours/tours.api/data/mysql:/var/lib/mysql -e MYSQL_ROOT_PASSWORD=123456 -d --name mysql mysql/mysql-server --default-authentication-plugin=mysql_native_password
+
+mysql_stop:
+	docker stop mysql
+
+mongod:
+	docker run --rm -p 27017:27017 -d --name mongodb \
+	-v /Users/ibrahim/srv/git/ugotours/tours.api/data/mongodb:/data/db \
+    -e MONGO_INITDB_ROOT_USERNAME=admin \
+    -e MONGO_INITDB_ROOT_PASSWORD=123456 \
+		-e MONGO_INITDB_DATABASE=tourfax \
+    mongo
+
+mongo:
+	docker exec -it mongodb \
+    mongo \
+        -u admin \
+        -p 123456 \
+        --authenticationDatabase admin \
+        tourfax
+
+mongo_stop:
+	docker stop mongodb
 
 docker_build:
 	docker build -t ${dimage} -f ./build/Dockerfile .
