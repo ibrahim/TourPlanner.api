@@ -1,0 +1,18 @@
+{
+  "id": "https://json-schema.org/geo",
+  "$schema": "https://json-schema.org/draft-06/schema#",
+  "description": "trip model",
+  "type": "object",
+  "properties": {
+    "uuid": { "type": "string" },
+    "name": { "type": "string" },
+    "status": { "type": "integer" },
+    "price": { "type": "string" },
+    "description": { "type": "string" },
+    "download_pdf": { "type": "boolean" },
+    "messaging": { "type": "boolean" },
+    "overview_map": { "type": "boolean" },
+    "created_at": { "type": "string" },
+    "updated_at": { "type": "string" }
+  }
+}

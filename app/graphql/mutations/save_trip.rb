@@ -2,7 +2,7 @@ module Mutations
     SaveTrip = GraphQL::Relay::Mutation.define do
         name "SaveTrip"
 
-        input_field :trip_id, types.Int
+        input_field :uuid, types.String
         input_field :status, types.Int
         input_field :name, types.String
         input_field :price, types.String
@@ -19,17 +19,18 @@ module Mutations
 
           return GraphQL::ExecutionError.new("Unauthorized Access Denied") if ctx[:current_user].blank?
 
-          trip = inputs[:trip_id] ? Trip.find(inputs) : Trip.new
+          trip = inputs[:uuid].present? ? Trip.find(inputs[:uuid]).first : Trip.new
+          return GraphQL::ExecutionError.new("Trip Not Found") if trip.blank?
           trip_attributes = {
-            status: inputs[:status],
-            user: ctx[:current_user],
-            name: inputs[:name],
-            start_at: inputs[:start_at],
-            price: inputs[:price],
-            description: inputs[:description],
-            download_pdf: inputs[:download_pdf],
-            messaging: inputs[:messaging],
-            overview_map: inputs[:overview_map]
+            status:        inputs[:status],
+            user:          ctx[:current_user],
+            name:          inputs[:name],
+            start_at:      inputs[:start_at],
+            price:         inputs[:price],
+            description:   inputs[:description],
+            download_pdf:  inputs[:download_pdf],
+            messaging:     inputs[:messaging],
+            overview_map:  inputs[:overview_map]
           }
           if trip.update_attributes(trip_attributes)
             return { 
