@@ -2,13 +2,13 @@ dimage?=gcr.io/vspegypt/tourfax
 
 run: rails s -p 5555
 
-migrate: migrate_development migrate_test
+migrate: migrate_dev migrate_test
 
-dbmigrate:
+migrate_dev:
 	rails db:migrate; 
 
 migrate_test:
-	rails db:migrate RAILS=test;
+	rails db:migrate RAILS_ENV=test;
 
 createdbuser:
 	docker exec -it mysqleight mysql -u root -p123456 -e 'create user "tourfax" identified by "123456"; GRANT ALL ON *.* TO "tourfax"@"%";'
