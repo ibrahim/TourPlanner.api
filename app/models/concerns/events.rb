@@ -15,8 +15,4 @@ module Events
   class_methods do
   end
   
-  def __type
-    self[:type].split("::").last
-  end
-
 end

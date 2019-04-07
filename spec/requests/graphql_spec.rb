@@ -102,7 +102,7 @@ RSpec.describe 'GraphQl API', type: :request do
       events = @response_body["data"]["current_user"]["trips"][0]["events"]
       aggregate_failures "trip events" do
         expect(events.count).to eq(EVENTS_TYPES.length)
-        expect(events.map{|e| e["_type"]}).to match_array(EVENTS_TYPES.map{|t| t.to_s.singularize.capitalize})
+        expect(events.map{|e| e["_type"]}).to match_array(EVENTS_TYPES.map{|t| "Event::%s" % [t.to_s.singularize.capitalize]})
       end
     end
     it "should return all snippets types for user's trip events" do
@@ -115,7 +115,7 @@ RSpec.describe 'GraphQl API', type: :request do
       snippets = _activity["snippets"]
       aggregate_failures "events snippets" do
         expect(snippets.count).to eq(SNIPPETS_TYPES.length)
-        expect(snippets.map{|e| e["_type"]}).to match_array(SNIPPETS_TYPES.map{|t| t.to_s.singularize.capitalize})
+        expect(snippets.map{|e| e["_type"]}).to match_array(SNIPPETS_TYPES.map{|t| "Snippet::%s" % [ t.to_s.singularize.capitalize]})
       end
     end
   end

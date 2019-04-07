@@ -1,0 +1,20 @@
+{
+  "id": "https://json-schema.org/geo",
+  "$schema": "https://json-schema.org/draft-06/schema#",
+  "description": "event model",
+  "type": "object",
+  "properties": {
+    "_type":       { "type": "string"  },
+    "uuid":        { "type": "string"  },
+    "title":       { "type": "string"  },
+    "notes":       { "type": "string"  },
+    "price":       { "type": "integer" },
+    "currency":    { "type": "string"  },
+    "starts_at":   { "type": "string"  },
+    "duration":    { "type": "integer" },
+    "day":         { "type": "integer" },
+    "snippets":    { "type": "array"   },
+    "created_at":  { "type": "string"  },
+    "updated_at":  { "type": "string"  }
+  }
+}

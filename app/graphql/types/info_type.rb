@@ -1,6 +1,6 @@
 Types::InfoType = GraphQL::ObjectType.define do
   name "Info"
-  field :_type, types.String, property: :__type
+  field :_type, types.String, property: :type
   field :title,  types.String
   field :description, types.String
   field :icon,  types.String

@@ -1,6 +1,6 @@
 Types::PlaceType = GraphQL::ObjectType.define do
   name "Place"
-  field :_type, types.String, property: :__type
+  field :_type, types.String, property: :type
   field :title, types.String
   field :description, types.String
   field :vicinity, types.String
