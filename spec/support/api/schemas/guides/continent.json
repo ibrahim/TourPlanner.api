@@ -1,7 +1,8 @@
 {
    "required" : [
-      "title",
-      "countries"
+      "name",
+      "countries",
+      "full_url"
    ],
    "description" : "Continent",
    "id" : "https://json-schema.org/geo",
@@ -31,7 +32,10 @@
          },
          "type" : "array"
       },
-      "title" : {
+      "full_url": {
+        "type": "string"
+      },
+      "name" : {
          "type" : "string"
       }
    }
