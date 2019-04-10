@@ -30,6 +30,12 @@ mysqld:
 mysql_stop:
 	docker stop mysql
 
+redis:
+	docker run --rm --name redis -p 6379:6379 -v /Users/ibrahim/srv/git/ugotours/tours.api/data/redis:/data -d redis redis-server --appendonly yes
+
+redis_stop:
+	docker stop redis
+
 mongod:
 	docker run --rm -p 27017:27017 -d --name mongodb \
 	-v /Users/ibrahim/srv/git/ugotours/tours.api/data/mongodb:/data/db \

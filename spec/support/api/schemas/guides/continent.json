@@ -1,0 +1,38 @@
+{
+   "required" : [
+      "title",
+      "countries"
+   ],
+   "description" : "Continent",
+   "id" : "https://json-schema.org/geo",
+   "$schema" : "https://json-schema.org/draft-06/schema#",
+   "type" : "object",
+   "definitions" : {
+      "country" : {
+         "required" : [
+            "name",
+            "full_url"
+         ],
+         "type" : "object",
+         "properties" : {
+            "name" : {
+               "type" : "string"
+            },
+            "full_url" : {
+               "type" : "string"
+            }
+         }
+      }
+   },
+   "properties" : {
+      "countries" : {
+         "items" : {
+            "$ref" : "#/definitions/country"
+         },
+         "type" : "array"
+      },
+      "title" : {
+         "type" : "string"
+      }
+   }
+}

@@ -1,5 +1,10 @@
 # This file is copied to spec/ when you run 'rails generate rspec:install'
 require 'spec_helper'
+require 'vcr'
+require 'database_cleaner'
+require 'rspec/collection_matchers'
+
+
 # require 'graphql_test_helper'
 ENV['RAILS_ENV'] ||= 'test'
 require File.expand_path('../../config/environment', __FILE__)
@@ -34,7 +39,7 @@ end
 RSpec.configure do |config|
   # Remove this line if you're not using ActiveRecord or ActiveRecord fixtures
   config.fixture_path = "#{::Rails.root}/spec/fixtures"
-
+  config.fail_fast = true
   # If you're not using ActiveRecord, or you'd prefer not to run each of your
   # examples within a transaction, remove the following line or assign false
   # instead of true.
@@ -59,13 +64,38 @@ RSpec.configure do |config|
   config.filter_rails_from_backtrace!
   # arbitrary gems may also be filtered via:
   # config.filter_gems_from_backtrace("gem name")
+  config.snapshot_dir = "spec/fixtures/snapshots"
+  
 end
+
+
+EVENTS_TYPES = [:activities, :lodgings, :flights, :transportations, :cruises, :informations, :dinings]
+SNIPPETS_TYPES = [:places, :infos]
+
+DatabaseCleaner.strategy = :truncation
+#{{{ Shoulda
 Shoulda::Matchers.configure do |config|
   config.integrate do |with|
     with.test_framework :rspec
     with.library :rails
   end
 end
+#}}}
+#{{{ SideKiq
+RSpec::Sidekiq.configure do |config|
+  # Clears all job queues before each example
+  config.clear_all_enqueued_jobs = true # default => true
 
-EVENTS_TYPES = [:activities, :lodgings, :flights, :transportations, :cruises, :informations, :dinings]
-SNIPPETS_TYPES = [:places, :infos]
+  # Whether to use terminal colours when outputting messages
+  config.enable_terminal_colours = true # default => true
+
+  # Warn when jobs are not enqueued to Redis but to a job array
+  #config.warn_when_jobs_not_processed_by_sidekiq = true # default => true
+end
+#}}}
+#{{{ VCR
+VCR.configure do |config|
+  config.cassette_library_dir = "spec/fixtures/vcr_cassettes"
+  config.hook_into :webmock # or :fakeweb
+end
+#}}}

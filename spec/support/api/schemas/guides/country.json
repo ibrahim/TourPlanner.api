@@ -1,0 +1,54 @@
+{
+   "required" : [
+      "name",
+      "slug",
+      "full_url",
+      "cities"
+   ],
+   "description" : "Country",
+   "id" : "https://json-schema.org/geo",
+   "$schema" : "https://json-schema.org/draft-06/schema#",
+   "type" : "object",
+   "definitions" : {
+      "city" : {
+         "required" : [
+            "name",
+            "thumb",
+            "description",
+            "full_url"
+         ],
+         "type" : "object",
+         "properties" : {
+            "name" : {
+               "type" : "string"
+            },
+            "thumb" : {
+               "type" : "string"
+            },
+            "description" : {
+               "type" : "string"
+            },
+            "full_url" : {
+               "type" : "string"
+            }
+         }
+      }
+   },
+   "properties" : {
+      "cities" : {
+         "items" : {
+            "$ref" : "#/definitions/city"
+         },
+         "type" : "array"
+      },
+      "name" : {
+         "type" : "string"
+      },
+      "slug" : {
+         "type" : "string"
+      },
+      "full_url" : {
+         "type" : "string"
+      }
+   }
+}

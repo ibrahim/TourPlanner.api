@@ -50,31 +50,39 @@ gem "store_attribute", "~>0.5.0"
 gem 'devise'
 gem 'devise-jwt'
 gem 'activerecord-typedstore'
+gem 'mongoid'
+gem 'sidekiq'
+gem 'sidekiq-middleware'
 gem 'globalize', git: 'https://github.com/globalize/globalize'
 gem 'activemodel-serializers-xml'
 gem 'active_delegate'
 # gem 'ruby-prof'
 # gem 'ruby-prof-flamegraph'
-
+gem 'wombat'
 gem 'will_paginate'
 gem "google_url_shortener", :require => 'google_url_shortener'
 gem 'dotenv-rails', :groups => [:development, :test]
 gem 'annotate', group: :development
 gem 'cancancan'
+gem 'possibly'
 
-group :development, :test do
-  gem 'rspec-rails', '~> 3.8', group: :development
-  gem 'devise-specs', group: :development
-  gem "json_matchers", group: :test
+group :test do
+  gem 'rspec-rails', '~> 3.8'
+  gem 'devise-specs'
+  gem 'json_matchers'
   gem 'shoulda-matchers'
   gem 'rails-controller-testing'
-  gem 'rspec-graphql_matchers', group: :test
-  gem 'guard-rspec', require: false, group: :development
-  gem 'growl'
-  # gem 'growl_notify'
-  gem "terminal-notifier"
+  gem 'rspec-graphql_matchers'
+  gem 'rspec-collection_matchers'
+  gem 'guard-rspec', require: false
+  gem 'terminal-notifier'
   gem 'terminal-notifier-guard'
   gem 'fabrication'
+  gem 'rspec-sidekiq'
+  gem 'vcr'
+  gem 'webmock'
+  gem 'database_cleaner'
+  gem 'rspec-snapshot'
 end
 
 # Use Capistrano for deployment

@@ -1,0 +1,12 @@
+development:
+  clients:
+    default:
+      database: guides
+      hosts:
+        - localhost:27017
+test:
+  clients:
+    default:
+      database: tourfax_test
+      hosts:
+        - localhost:27017

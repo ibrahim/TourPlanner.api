@@ -1,0 +1,71 @@
+{
+   "properties" : {
+      "tags" : {
+         "items" : {
+            "type" : "string"
+         },
+         "type" : "array"
+      },
+      "facts" : {
+         "type" : "array",
+         "items" : {
+            "$ref" : "#/definitions/fact"
+         }
+      },
+      "last_updated" : {
+         "type" : "string"
+      },
+      "categories" : {
+         "type" : "array",
+         "items" : {
+            "$ref" : "#/definitions/category"
+         }
+      },
+      "name" : {
+         "type" : "string"
+      }
+   },
+   "required" : [
+      "name",
+      "full_url",
+      "last_updated",
+      "categories",
+      "facts"
+   ],
+   "$schema" : "https://json-schema.org/draft-06/schema#",
+   "definitions" : {
+      "fact" : {
+         "properties" : {
+            "info" : {
+               "type" : "string"
+            },
+            "name" : {
+               "type" : "string"
+            }
+         },
+         "required" : [
+            "name",
+            "info"
+         ],
+         "type" : "object"
+      },
+      "category" : {
+         "properties" : {
+            "name" : {
+               "type" : "string"
+            },
+            "full_url" : {
+               "type" : "string"
+            }
+         },
+         "required" : [
+            "name",
+            "full_url"
+         ],
+         "type" : "object"
+      }
+   },
+   "id" : "https://json-schema.org/geo",
+   "type" : "object",
+   "description" : "City"
+}
