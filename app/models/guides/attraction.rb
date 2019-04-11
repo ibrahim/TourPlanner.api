@@ -7,8 +7,8 @@ class Guides::Attraction
   field :full_url, type: String
   field :description, type: String
 
-  belongs_to :city
-  belongs_to :category
+  belongs_to :city, index: true
+  belongs_to :category, index: true
 
   validates_presence_of :full_url, :name, :slug
   index({ slug: 1, city: 1, category: 1 },{ unique: true })

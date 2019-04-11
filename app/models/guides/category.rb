@@ -29,8 +29,8 @@ class Guides::Category
       attractions "css=.main-container .tile-group article", :iterator do 
         full_url xpath: "./a/@href"
         thumb({ xpath: "./a/figure/img/@src" })
-        name "css=a .tileOverlay h2"
-        description "css=a .tileOverlay .tileContentNoSlide"
+        name 'css=a div[class^="tileOverlay"] h2'
+        description 'css=a div[class^="tileOverlay"] div div[class^="tileContent"]'
       end
     end
     self.description = @result["description"]
@@ -48,15 +48,19 @@ class Guides::Category
   def save_attractions
     raise "Category must be saved first before adding attractions" if new_record?
     @result["attractions"].each do |attraction|
-      Guides::Attraction.create!(
-        name: attraction["name"], 
-        slug: attraction["full_url"].split("/").last,
-        thumb: attraction["thumb"], 
-        full_url: attraction["full_url"], 
-        description: attraction["description"],
-        city: city,
-        category: self
-      )
+      begin
+        Guides::Attraction.create!(
+          name: attraction["name"], 
+          slug: attraction["full_url"].split("/").last,
+          thumb: attraction["thumb"], 
+          full_url: attraction["full_url"], 
+          description: attraction["description"],
+          city: city,
+          category: self
+        )
+      rescue
+        File.open(Rails.root.join(), 'w') { |file| file.write("your text") }
+      end
     end
   end
 end

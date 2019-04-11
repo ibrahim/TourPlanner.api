@@ -65,6 +65,8 @@ gem 'dotenv-rails', :groups => [:development, :test]
 gem 'annotate', group: :development
 gem 'cancancan'
 gem 'possibly'
+gem 'sinatra'
+gem 'foreman'
 
 group :test do
   gem 'rspec-rails', '~> 3.8'

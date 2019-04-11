@@ -1,3 +1,5 @@
+require 'sidekiq/web'
+
 Rails.application.routes.draw do
   match "/graphql", to: "graphql#execute", via: [:get, :post, :options]
 
@@ -14,4 +16,6 @@ Rails.application.routes.draw do
                sessions: 'sessions',
                registrations: 'registrations'
              }
+  
+  mount Sidekiq::Web => '/sidekiq'
 end
