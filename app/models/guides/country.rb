@@ -40,6 +40,12 @@ class Guides::Country
     @result
   end
 
+  def fetch_and_save_all
+    fetch
+    save
+    save_cities
+  end
+
   def save_cities
     Raise "Cannot save cities. Country not saved yet or not found" if new_record?
     result["cities"].each do |c|

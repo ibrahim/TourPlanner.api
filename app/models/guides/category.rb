@@ -39,6 +39,12 @@ class Guides::Category
     @result
   end
 
+  def fetch_and_save_all
+    fetch
+    save
+    save_attractions
+  end
+
   def save_attractions
     raise "Category must be saved first before adding attractions" if new_record?
     @result["attractions"].each do |attraction|

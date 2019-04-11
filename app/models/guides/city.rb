@@ -52,6 +52,13 @@ class Guides::City
     @result
   end
 
+  def fetch_and_save_all
+    fetch
+    save
+    save_facts
+    save_categories
+  end
+
   def save_facts
     raise "City must be saved first before adding facts" if new_record?
     @result["facts"].each do |fact|

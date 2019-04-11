@@ -23,6 +23,11 @@ class Guides::Continent
     @result
   end
 
+  def fetch_and_save_all
+    fetch
+    save_countries
+  end
+
   def save_countries
     raise "Cannot save countries before continent is saved" if new_record?
     @result["countries"].each do |c|
