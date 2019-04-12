@@ -9,6 +9,15 @@ RSpec.describe "Persiting" do
       Guides::City.delete_all
       Guides::Category.delete_all
       Guides::Attraction.delete_all
+
+      Guides::Country.__elasticsearch__.delete_index!
+      Guides::City.__elasticsearch__.delete_index!
+      Guides::Attraction.__elasticsearch__.delete_index!
+
+      Guides::Country.__elasticsearch__.create_index!
+      Guides::City.__elasticsearch__.create_index!
+      Guides::Attraction.__elasticsearch__.create_index!
+
       @continent = VCR.use_cassette('Africa/index') do
         Guides::Continent.new(
           name: "Africa", 

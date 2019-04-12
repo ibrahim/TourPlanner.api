@@ -68,6 +68,9 @@ gem 'possibly'
 gem 'sinatra'
 gem 'foreman'
 
+gem 'elasticsearch-model', github: 'elastic/elasticsearch-rails', branch: '6.x'
+gem 'elasticsearch-rails', github: 'elastic/elasticsearch-rails', branch: '6.x'
+
 group :test do
   gem 'rspec-rails', '~> 3.8'
   gem 'devise-specs'

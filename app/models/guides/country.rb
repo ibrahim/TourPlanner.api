@@ -1,6 +1,13 @@
 class Guides::Country
   include Mongoid::Document
 
+  include Elasticsearch::Model
+  include Elasticsearch::Model::Callbacks
+  index_name "guides_countries"
+  def as_indexed_json(options={})
+    self.as_json({only: [:name, :description, :continent_id]}) 
+  end 
+
   field :name, type: String
   field :slug, type: String
   field :thumb, type: String
@@ -12,6 +19,7 @@ class Guides::Country
   has_many :cities
   index({ name: 1 },{ unique: true })
   # index { continent: 1}
+
 
   attr_accessor :result
 

@@ -36,6 +36,13 @@ redis:
 redis_stop:
 	docker stop redis
 
+es:
+	docker run --rm -d --name elasticsearch -p 9200:9200 -p 9300:9300 -v /Users/ibrahim/srv/git/ugotours/tours.api/config/elasticsearch.yml:/usr/share/elasticsearch/config/elasticsearch.yml -v /Users/ibrahim/srv/git/ugotours/tours.api/data/elasticsearch:/usr/share/elasticsearch/data -e "discovery.type=single-node" docker.elastic.co/elasticsearch/elasticsearch:6.7.1
+
+
+es_stop:
+	docker stop elasticsearch
+	
 mongod:
 	docker run --rm -p 27017:27017 -d --name mongodb \
 	-v /Users/ibrahim/srv/git/ugotours/tours.api/data/mongodb:/data/db \

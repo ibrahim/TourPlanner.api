@@ -1,6 +1,13 @@
 class Guides::City
   include Mongoid::Document
 
+  include Elasticsearch::Model
+  include Elasticsearch::Model::Callbacks
+  index_name "guides_cities"
+  def as_indexed_json(options={})
+    self.as_json({only: [:name, :description]}) 
+  end 
+
   field :name, type: String
   field :thumb, type: String
   field :slug, type: String
@@ -23,6 +30,7 @@ class Guides::City
   # has_many :cities
   index({ name: 1, country: 1},{ unique: true })
   # index { continent: 1}
+  
   
   def fetch
     city_url = full_url
