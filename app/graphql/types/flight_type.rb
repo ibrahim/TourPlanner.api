@@ -2,7 +2,7 @@ Types::FlightType = GraphQL::ObjectType.define do
   name "Flight"
   field :uuid, types.String
   field :_type, types.String, property: :type
-  field :title, types.String
+  field :title, !types.String
   field :notes, types.String
   field :starts_at, types.String
   field :duration, types.Int

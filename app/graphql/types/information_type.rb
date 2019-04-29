@@ -1,8 +1,8 @@
 Types::InformationType = GraphQL::ObjectType.define do
   name "Information"
-  field :uuid, types.String
+  field :uuid, !types.String
   field :_type, types.String, property: :type
-  field :title, types.String
+  field :title, !types.String
   field :notes, types.String
   field :day, types.Int
   field :snippets, types[Types::SnippetType] do

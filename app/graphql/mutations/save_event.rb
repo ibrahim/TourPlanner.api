@@ -13,7 +13,7 @@ module Mutations
         input_field  :day,       types.Int
         input_field  :trip_id,   types.String
 
-        return_field :event, Types::EventType
+        return_field :event, !Types::EventType
         return_field :errors, types.String
 
         resolve ->(object, inputs, ctx) do
@@ -24,12 +24,14 @@ module Mutations
           return GraphQL::ExecutionError.new("Cannot Save Event: Parent Trip Not Found.") if trip.blank?
           
           return GraphQL::ExecutionError.new("Event Type Not Identified")  unless inputs[:_type].present?
+
           model = inputs[:_type].constantize
-          type = ("Types::%sType" % [ inputs[:_type].split(":").last ]).constantize
           event = inputs[:uuid] ? model.find(inputs[:uuid]).first : model.new
           return GraphQL::ExecutionError.new("Event Not Found") if event.blank?
+          
+          graphql_type = ("Types::%sType" % [ inputs[:_type].split(":").last ]).constantize
           attrs = {} 
-          type.fields.keys.each do |k|
+          graphql_type.fields.keys.each do |k|
             attrs[k] = inputs[k] unless ["uuid","_type","snippets"].include?(k)
           end
           # attrs = {

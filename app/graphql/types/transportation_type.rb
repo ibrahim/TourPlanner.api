@@ -1,8 +1,8 @@
 Types::TransportationType = GraphQL::ObjectType.define do
   name "Transportation"
-  field :uuid, types.String
+  field :uuid, !types.String
   field :_type, types.String, property: :type
-  field :title, types.String
+  field :title, !types.String
   field :notes, types.String
   field :price, types.Int
   field :starts_at, types.String

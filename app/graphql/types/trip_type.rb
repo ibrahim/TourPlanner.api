@@ -1,8 +1,8 @@
 Types::TripType = GraphQL::ObjectType.define do
   name "Trip"
-  field :uuid, types.String
-  field :status, types.Int
-  field :name, types.String
+  field :uuid, !types.String
+  field :status, !types.Int
+  field :name, !types.String
   field :start_at, types.String
   field :price, types.String
   field :description, types.String
@@ -10,7 +10,7 @@ Types::TripType = GraphQL::ObjectType.define do
   field :messaging, types.Boolean
   field :overview_map, types.Boolean
 
-  field :events, types[Types::EventType] do
+  field :events, !types[!Types::EventType] do
     # argument :status, types.String
     # argument :limit, types.Int
     # preload  :frames

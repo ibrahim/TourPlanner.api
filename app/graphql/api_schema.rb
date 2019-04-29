@@ -62,22 +62,22 @@ ApiSchema.query_analyzers << log_query_complexity
 # }
 
 
-GraphQL::Errors.configure(ApiSchema) do
-  rescue_from ActiveRecord::RecordNotFound do |exception|
-    nil
-  end
-
-  rescue_from ActiveRecord::RecordInvalid do |exception|
-    GraphQL::ExecutionError.new(exception.record.errors.full_messages.join("\n"))
-  end
-
-  rescue_from StandardError do |e|
-    GraphQL::ExecutionError.new e.message
-  end
-
-  # rescue_from CustomError do |exception, object, arguments, context|
-  #   error = GraphQL::ExecutionError.new("Error found!")
-  #   firstError.path = context.path + ["myError"]
-  #   context.add_error(firstError)
-  # end
-end
+# GraphQL::Errors.configure(ApiSchema) do
+#   rescue_from ActiveRecord::RecordNotFound do |exception|
+#     nil
+#   end
+#
+#   rescue_from ActiveRecord::RecordInvalid do |exception|
+#     GraphQL::ExecutionError.new(exception.record.errors.full_messages.join("\n"))
+#   end
+#
+#   rescue_from StandardError do |e|
+#     GraphQL::ExecutionError.new e.message
+#   end
+#
+#   # rescue_from CustomError do |exception, object, arguments, context|
+#   #   error = GraphQL::ExecutionError.new("Error found!")
+#   #   firstError.path = context.path + ["myError"]
+#   #   context.add_error(firstError)
+#   # end
+# end
