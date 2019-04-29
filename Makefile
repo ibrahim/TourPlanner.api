@@ -15,6 +15,8 @@ createdbuser:
 
 initdb: dropdb createdb
 
+services: mysqld redis es mongod
+
 createdb:
 	docker exec -it mysql mysql -u root -p123456 -e 'create database tourfax; create database tourfax_test;'
 
