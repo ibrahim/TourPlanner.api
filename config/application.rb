@@ -38,9 +38,13 @@ module Api
     config.autoload_paths << Rails.root.join('app/graph/mutations')
     config.autoload_paths << Rails.root.join('app/graph/types')
     config.autoload_paths << Rails.root.join('app/graph/')
+    #config.autoload_paths << Rails.root.join('app/lib/')
+    config.eager_load_paths << Rails.root.join('app/lib')
 
     config.active_record.dump_schema_after_migration = false
-    
+    config.generators do |g|
+      g.orm :active_record
+    end
     config.middleware.insert_before 0, Rack::Cors do 
       allow do 
         origins '*' 
