@@ -13,7 +13,7 @@ module Mutations
         input_field  :day,       types.Int
         input_field  :trip_id,   types.String
 
-        return_field :event, !Types::EventType
+        return_field :user, !Types::UserType
         return_field :errors, types.String
 
         resolve ->(object, inputs, ctx) do
@@ -48,7 +48,7 @@ module Mutations
           event.trip_id = trip.id if event.new_record?
           if event.update_attributes(attrs)
             return { 
-              event: event,
+              user: ctx[:current_user],
             }
           else
             GraphQL::ExecutionError.new("Unable to save trip.#{event.errors.messages.map{|k,v| " #{k} #{v.join(",")}."}.join(". ")}")

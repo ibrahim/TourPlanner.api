@@ -6,9 +6,13 @@ Types::UserType = GraphQL::ObjectType.define do
   field :trips, !types[!Types::TripType] do
     argument :status, types.String
     argument :limit, types.Int
+    argument :uuid, types.String
     # preload  :frames
     resolve ->(user, args, ctx) {
-        user.trips #.sort{|a,b| a.lft <=> b.lft}
+        trips = user.trips 
+        trips = trips.where(uuid: args[:uuid]) if args[:uuid].present?
+        trips.all
+        #.sort{|a,b| a.lft <=> b.lft}
     }
   end
 end
