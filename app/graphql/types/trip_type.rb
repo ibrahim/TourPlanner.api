@@ -18,4 +18,5 @@ Types::TripType = GraphQL::ObjectType.define do
       trip.events.all
     }
   end
+  
 end

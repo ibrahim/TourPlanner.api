@@ -15,4 +15,15 @@ Types::UserType = GraphQL::ObjectType.define do
         #.sort{|a,b| a.lft <=> b.lft}
     }
   end
+  field :event, Types::EventType do
+    description "Event type"
+    argument :uuid, types.String
+    argument :trip_id, types.String
+    resolve ->(user, args, ctx) {
+      return nil if args[:uuid].blank?
+      return nil if args[:trip_id].blank?
+      trip = user.trips.where(uuid: args[:trip_id]).first
+      event = trip.events.where(uuid: args[:uuid]).first
+    }
+  end
 end

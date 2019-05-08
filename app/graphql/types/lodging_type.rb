@@ -1,7 +1,7 @@
 Types::LodgingType = GraphQL::ObjectType.define do
   name "Lodging"
   field :uuid, !types.String
-  field :_type, types.String, property: :type
+  field :_type, !types.String, property: :type
   field :title, !types.String
   field :notes, types.String
   field :price, types.Int
