@@ -31,5 +31,26 @@ class Trip < ApplicationRecord
   has_many :informations, class_name: "Event::Information"
   has_many :lodgings, class_name: "Event::Lodging"
   has_many :dinings, class_name: "Event::Dining"
+  has_many :sections
   belongs_to :user
+
+  def association_for(event_type)
+    case event_type.split("::").last.downcase
+    when "information"
+      return informations
+    when "activity"
+      return activities
+    when "lodging"
+      return lodgings
+    when "flight"
+      return flights
+    when "transportation"
+      return transportations
+    when "cruise"
+      return cruises
+    when "dining"
+      return dinings
+
+    end
+  end
 end

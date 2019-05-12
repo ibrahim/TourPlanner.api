@@ -14,6 +14,7 @@
 #  uuid       :string(36)
 #  created_at :datetime         not null
 #  updated_at :datetime         not null
+#  day_id     :binary(16)
 #  trip_id    :binary(16)
 #
 

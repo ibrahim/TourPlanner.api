@@ -1,8 +1,9 @@
 Types::DiningType = GraphQL::ObjectType.define do
   name "Dining"
   field :uuid, !types.String
+  field :section_id, !types.String, property: :section_uuid
   field :_type, !types.String, property: :type
-  field :title, !types.String
+  field :title, types.String
   field :notes, types.String
   field :price, types.Int
   field :starts_at, types.String

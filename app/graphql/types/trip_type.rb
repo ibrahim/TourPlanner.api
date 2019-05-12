@@ -10,6 +10,11 @@ Types::TripType = GraphQL::ObjectType.define do
   field :messaging, types.Boolean
   field :overview_map, types.Boolean
 
+  field :sections, !types[!Types::SectionType] do
+    resolve ->(trip, args, ctx) {
+      trip.sections.all
+    }
+  end
   field :events, !types[!Types::EventType] do
     # argument :status, types.String
     # argument :limit, types.Int
