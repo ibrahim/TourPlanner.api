@@ -17,6 +17,8 @@ initdb: dropdb createdb
 
 services: mysqld redis es mongod
 
+services_stop: mysql_stop redis_stop es_stop mongo_stop
+
 createdb:
 	docker exec -it mysql mysql -u root -p123456 -e 'create database tourfax; create database tourfax_test;'
 
