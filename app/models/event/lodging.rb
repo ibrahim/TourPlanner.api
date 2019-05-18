@@ -14,12 +14,12 @@
 #  uuid       :string(36)
 #  created_at :datetime         not null
 #  updated_at :datetime         not null
-#  day_id     :binary(16)
+#  section_id :binary(16)
 #  trip_id    :binary(16)
 #
 
 class Event::Lodging < Event::Base
   include Events
-  DETAILS = [:booked_through, :confirmation]
+  DETAILS = [:booked_through, :confirmation, :provider]
   store :details, accessors: DETAILS, coder: JSON
 end

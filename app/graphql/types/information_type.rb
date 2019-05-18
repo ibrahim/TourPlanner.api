@@ -6,6 +6,7 @@ Types::InformationType = GraphQL::ObjectType.define do
   field :title, types.String
   field :notes, types.String
   field :day, types.Int
+  field :info_type, types.String
   field :snippets, types[Types::SnippetType] do
     resolve ->(event, args, ctx) {
       event.snippets.all

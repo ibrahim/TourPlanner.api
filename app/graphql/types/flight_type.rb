@@ -5,7 +5,7 @@ Types::FlightType = GraphQL::ObjectType.define do
   field :_type, !types.String, property: :type
   field :title, types.String
   field :notes, types.String
-  field :starts_at, types.String
+  field :starts_at, types.Float
   field :duration, types.Int
   field :day, types.Int
   field :price, types.Int

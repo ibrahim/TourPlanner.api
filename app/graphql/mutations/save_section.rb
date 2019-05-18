@@ -15,14 +15,14 @@ module Mutations
         return_field :user, !Types::UserType
         return_field :errors, types.String
 
-        resolve ->(object, inputs, ctx) do
+        resolve -> (object, inputs, ctx) do
 
           return GraphQL::ExecutionError.new("Unauthorized Access Denied") if ctx[:current_user].blank?
 
           trip =  Trip.find(inputs[:trip_id]).first #if inputs[:trip_id].present?
           return GraphQL::ExecutionError.new("Cannot Save Section: Parent Trip Not Found.") if trip.blank?
           
-          section = inputs[:uuid] ? trip.sections.find(inputs[:uuid]).first : Section.new
+          section = inputs[:uuid] ? trip.sections.where(uuid: inputs[:uuid]).first : trip.sections.new
           return GraphQL::ExecutionError.new("Section Not Found") if inputs[:uuid].present? && section.blank?
           
           section.trip_id   = trip.id if section.new_record?
@@ -36,7 +36,7 @@ module Mutations
               user: ctx[:current_user],
             }
           else
-            return GraphQL::ExecutionError.new("Unable to save trip.#{section.errors.messages.map{|k,v| " #{k} #{v.join(",")}."}.join(". ")}")
+            return GraphQL::ExecutionError.new("Unable to save section.#{section.errors.messages.map{|k,v| " #{k} #{v.join(",")}."}.join(". ")}")
           end
         end
     end
