@@ -14,6 +14,7 @@ module Mutations
         input_field  :price,     types.Int
         input_field  :currency,  types.String
         input_field  :starts_at, types.Float
+        input_field  :ends_at,   types.Float
         input_field  :duration,  types.Int
         input_field  :day,       types.Int
         input_field  :booked_through,     types.String
@@ -82,6 +83,7 @@ module Mutations
           event.cabin_type = inputs[:cabin_type] if inputs[:cabin_type].present?
           event.cabin_number = inputs[:cabin_number] if inputs[:cabin_number].present?
           event.starts_at = inputs[:starts_at] if inputs[:starts_at].present?
+          event.ends_at = inputs[:ends_at] if inputs[:ends_at].present?
           event.duration = inputs[:duration] if inputs[:duration].present?
           event.booked_through = inputs[:booked_through] if inputs[:booked_through].present?
           event.confirmation = inputs[:confirmation] if inputs[:confirmation].present?

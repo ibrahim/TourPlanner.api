@@ -6,33 +6,41 @@ ApiSchema = GraphQL::Schema.define do
   use GraphQL::Batch
   # use ApolloTracing.new
   #query_execution_strategy GraphQL::Batch::ExecutionStrategy
-  enable_preloading
+  #enable_preloading
   # max_depth 12
   # max_complexity 200
 
   query Types::QueryType
   mutation Mutations::MutationType
 
-  # resolve_type ->(obj, ctx) do
-  #   case obj.class.name
-  #   when "Page"
-  #     Types::PageType
-  #   when "Photo"
-  #     Types::PhotoType
-  #   when "Frame"
-  #     Types::FrameType
-  #   when "Site"
-  #     Types::SiteType
-  #   when "Feedback"
-  #     Types::FeedbackType
-  #   when "Form"
-  #     Types::FormType
-  #   when "Part"
-  #     Types::PartType
-  #   else
-  #     raise("Don't know how to get the GraphQL type of a #{obj.class.name} (#{obj.inspect})")
-  #   end
-  # end
+  resolve_type ->(obj, ctx) do
+    case obj.class.name
+    when "Trip"
+      Types::TripType
+    when "User"
+      Types::UserType
+    when "Activity"
+      Types::ActivityType
+    when "Lodging"
+      Types::LodgingType
+    when "Flight"
+      Types::FlightType
+    when "Transportation"
+      Types::TransportationType
+    when "Cruise"
+      Types::CruiseType
+    when "Dining"
+      Types::DiningType
+    when "Information"
+      Types::InformationType
+    when "Place"
+      Types::PlaceType
+    when "Info"
+      Types::InfoType
+    else
+      raise("Don't know how to get the GraphQL type of a #{obj.class.name} (#{obj.inspect})")
+    end
+  end
   #
   # object_from_id ->(id, ctx) do
   #   type_name, item_id = GraphQL::Schema::UniqueWithinType.decode(id)

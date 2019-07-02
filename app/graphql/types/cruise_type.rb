@@ -6,6 +6,7 @@ Types::CruiseType = GraphQL::ObjectType.define do
   field :title, types.String
   field :notes, types.String
   field :starts_at, types.Float
+  field :ends_at, types.Float
   field :duration, types.Int
   field :price, types.Int
   field :currency, types.String

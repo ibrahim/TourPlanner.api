@@ -7,6 +7,7 @@ Types::TransportationType = GraphQL::ObjectType.define do
   field :notes, types.String
   field :price, types.Int
   field :starts_at, types.Float
+  field :ends_at, types.Float
   field :currency, types.String
   field :duration, types.Int
   field :booked_through, types.String

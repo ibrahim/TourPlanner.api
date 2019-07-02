@@ -7,6 +7,7 @@
 #  day        :integer
 #  details    :text(65535)
 #  duration   :integer
+#  ends_at    :float(24)
 #  price      :integer
 #  starts_at  :string(255)
 #  timezone   :string(255)

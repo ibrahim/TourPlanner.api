@@ -8,6 +8,7 @@ Types::LodgingType = GraphQL::ObjectType.define do
   field :price, types.Int
   field :currency, types.String
   field :starts_at, types.Float
+  field :ends_at, types.Float
   field :duration, types.Int
   field :booked_through, types.String
   field :confirmation, types.String
