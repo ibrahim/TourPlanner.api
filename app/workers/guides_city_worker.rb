@@ -8,7 +8,7 @@ class GuidesCityWorker
     city = Guides::City.find(city_id)
     city.fetch_and_save_all
     city.categories.each do |category|
-      GuidesCategoryWorker.perform_async(category.id)
+      GuidesCategoryWorker.new.perform(category.id)
     end
   end
 end

@@ -1,15 +1,14 @@
 # README
 
-A content Management System. Built using Ruby On Rails. This is only the backend. An API only Rails application.
+A  Tour Planner built using Ruby On Rails. This is only the backend. An API only Rails application.
 
-![](cms.gif)
+## Technologies
 
-## Features
-
-* Unlimited pages hierarchy.
-* Photo Attachments
-* Files Attachments
-* Custom form builder
-* Form builder support multiple field types.
-* Form builder support for nested forms
-* Goo.gl shortner to provide public links for attached files.
+* Mysql and mongoDB
+* mongoid
+* User Authentication and Authorization using Devise / Json Web Token (JWT) / CanCanCan
+* RSpec testing suite
+* all MySql models support binary UUID
+* SideKik / Background Jobs
+* GraphQL API Queries and Mutations.
+* Models support Elastic Search Indexing

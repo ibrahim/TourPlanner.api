@@ -129,7 +129,11 @@ RSpec.describe 'GraphQl Mutations', type: :request do
         json_params = { "query" => event_mutation.(), "variables" => { "input" => input }}.to_json
         post "/graphql", params:  json_params, headers: @auth_headers
         @response_body = JSON.parse(response.body)
-        expect(@response_body["data"]["saveEvent"]["event"].to_json).to match_json_schema("event")
+        data = @response_body["data"]
+        expect(data).to  eq("XXX")
+        payload = data["saveEvent"]
+        user =  payload["user"]
+        expect(user.to_json).to match_json_schema("event")
       end
     end #}}}
     #{{{ should update existing trip

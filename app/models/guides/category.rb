@@ -15,22 +15,24 @@ class Guides::Category
 
   def fetch
     category_url = full_url
-    domain_name = "https://www.arrivalguides.com"
+    domain_name =  ENV["GUIDES_DOMAIN"]
     path_url = full_url.gsub(domain_name,"")
-    @result = Wombat.crawl do
-      base_url domain_name
-      path path_url
-      slug category_url.to_s.split("/").last
-      full_url category_url
-      name css: ".facts-header .facts-title"
-      description xpath: "//div[@class='content-info']/text()[normalize-space(.) != '']"
-      country css: ".breadcrumbs-links a:nth-child(2)"
-      city css: ".breadcrumbs-links a:nth-child(3)"
-      attractions "css=.main-container .tile-group article", :iterator do 
-        full_url xpath: "./a/@href"
-        thumb({ xpath: "./a/figure/img/@src" })
-        name 'css=a div[class^="tileOverlay"] h2'
-        description 'css=a div[class^="tileOverlay"] div div[class^="tileContent"]'
+    VCR.use_cassette("Guides/#{path_url}") do
+      @result = Wombat.crawl do
+        base_url domain_name
+        path path_url
+        slug category_url.to_s.split("/").last
+        full_url category_url
+        name css: ".facts-header .facts-title"
+        description xpath: "//div[@class='content-info']/text()[normalize-space(.) != '']"
+        country css: ".breadcrumbs-links a:nth-child(2)"
+        city css: ".breadcrumbs-links a:nth-child(3)"
+        attractions "css=.main-container .tile-group article", :iterator do 
+          full_url xpath: "./a/@href"
+          thumb({ xpath: "./a/figure/img/@src" })
+          name 'css=a div[class^="tileOverlay"] h2'
+          description 'css=a div[class^="tileOverlay"] div div[class^="tileContent"]'
+        end
       end
     end
     self.description = @result["description"]
@@ -59,7 +61,7 @@ class Guides::Category
           category: self
         )
       rescue
-        File.open(Rails.root.join(), 'w') { |file| file.write("your text") }
+        $stdout.puts "Error writing attraction : " + attraction["name"].to_s
       end
     end
   end

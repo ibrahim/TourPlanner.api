@@ -25,23 +25,25 @@ class Guides::Country
 
   def fetch
     raise "Country url is not defined" if full_url.blank?
-    domain = "https://www.arrivalguides.com"
+    domain = ENV["GUIDES_DOMAIN"]
     path_url = full_url.gsub(domain, "")
     country_url = full_url
-    @result = Wombat.crawl do
-      base_url domain
-      path path_url
-      name css: ".country-text h1"
-      continent css: ".country-text a h3"
-      slug country_url.split("/").last
-      full_url country_url
-      cities "css=.left-content-holder article", :iterator do
-        name  css: ".content-list-text h2 a"
-        thumb({ xpath: "./figure/a/img/@src" })
-        full_url({ xpath: "./div/h2/a/@href" })
-        description css: ".list-info"
+    VCR.use_cassette("Guides/#{country_url}") do
+        @result = Wombat.crawl do
+          base_url domain
+          path path_url
+          name css: ".country-text h1"
+          continent css: ".country-text a h3"
+          slug country_url.split("/").last
+          full_url country_url
+          cities "css=.left-content-holder article", :iterator do
+            name  css: ".content-list-text h2 a"
+            thumb({ xpath: "./figure/a/img/@src" })
+            full_url({ xpath: "./div/h2/a/@href" })
+            description css: ".list-info"
+          end
+        end
       end
-    end
     self.name = @result["name"]
     self.full_url = @result["full_url"]
     self.slug = @result["slug"]

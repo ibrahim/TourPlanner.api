@@ -9,7 +9,7 @@ class GuidesCountryWorker
     # return true unless country.name =~ /Egypt/
     country.fetch_and_save_all
     country.cities.each do |city|
-      GuidesCityWorker.perform_async(city.id)
+      GuidesCityWorker.new.perform(city.id)
     end
   end
 end

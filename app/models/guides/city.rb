@@ -34,25 +34,27 @@ class Guides::City
   
   def fetch
     city_url = full_url
-    domain_name = "https://www.arrivalguides.com"
-    @result = Wombat.crawl do
-      path_url = city_url.gsub(domain_name,"")
-      base_url domain_name
-      path path_url
-      full_url city_url
-      slug city_url.split("/").last
-      name css: ".hero-text h1"
-      country css: ".hero-text h3"
-      last_updated css: ".guide-date time"
-      categories "css=.left-navi-block.slideMenu ul li.category", :iterator do
-        name  css: "a"
-        full_url({ xpath: "./a/@href" })
+    domain_name =  ENV["GUIDES_DOMAIN"]
+    VCR.use_cassette("Guides/#{city_url.gsub(domain_name,"")}") do
+      @result = Wombat.crawl do
+        path_url = city_url.gsub(domain_name,"")
+        base_url domain_name
+        path path_url
+        full_url city_url
+        slug city_url.split("/").last
+        name css: ".hero-text h1"
+        country css: ".hero-text h3"
+        last_updated css: ".guide-date time"
+        categories "css=.left-navi-block.slideMenu ul li.category", :iterator do
+          name  css: "a"
+          full_url({ xpath: "./a/@href" })
+        end
+        facts "css=.overview-pre-expand table tr", :iterator do
+          name "css=td.label"
+          info "css=td:last-child"
+        end
+        tags "css=.facts-header a.theme-dest-link", :list
       end
-      facts "css=.overview-pre-expand table tr", :iterator do
-        name "css=td.label"
-        info "css=td:last-child"
-      end
-      tags "css=.facts-header a.theme-dest-link", :list
     end
     @result["categories"] = @result["categories"].reject{|c| c["name"] =~ /Hotels/}
     self.slug = @result["slug"]

@@ -29,19 +29,19 @@ mysql:
 	docker exec -it mysql mysql -u root -p123456 -D tourfax
 
 mysqld:
-	docker run --rm -p 3306:3306 -v /Users/ibrahim/srv/git/ugotours/tours.api/data/mysql:/var/lib/mysql -e MYSQL_ROOT_PASSWORD=123456 -d --name mysql mysql/mysql-server --default-authentication-plugin=mysql_native_password
+	docker run --rm -p 3306:3306 -v /Users/ibrahim/srv/git/tourfax/tourfax.api/data/mysql:/var/lib/mysql -e MYSQL_ROOT_PASSWORD=123456 -d --name mysql mysql/mysql-server --default-authentication-plugin=mysql_native_password
 
 mysql_stop:
 	docker stop mysql
 
 redis:
-	docker run --rm --name redis -p 6379:6379 -v /Users/ibrahim/srv/git/ugotours/tours.api/data/redis:/data -d redis redis-server --appendonly yes
+	docker run --rm --name redis -p 6379:6379 -v /Users/ibrahim/srv/git/tourfax/tourfax.api/data/redis:/data -d redis redis-server --appendonly yes
 
 redis_stop:
 	docker stop redis
 
 es:
-	docker run --rm -d --name elasticsearch -p 9200:9200 -p 9300:9300 -v /Users/ibrahim/srv/git/ugotours/tours.api/config/elasticsearch.yml:/usr/share/elasticsearch/config/elasticsearch.yml -v /Users/ibrahim/srv/git/ugotours/tours.api/data/elasticsearch:/usr/share/elasticsearch/data -e "discovery.type=single-node" docker.elastic.co/elasticsearch/elasticsearch:6.7.1
+	docker run --rm -d --name elasticsearch -p 9200:9200 -p 9300:9300 -v /Users/ibrahim/srv/git/tourfax/tourfax.api/config/elasticsearch.yml:/usr/share/elasticsearch/config/elasticsearch.yml -v /Users/ibrahim/srv/git/tourfax/tourfax.api/data/elasticsearch:/usr/share/elasticsearch/data -e "discovery.type=single-node" docker.elastic.co/elasticsearch/elasticsearch:6.7.1
 
 
 es_stop:
@@ -49,7 +49,7 @@ es_stop:
 	
 mongod:
 	docker run --rm -p 27017:27017 -d --name mongodb \
-	-v /Users/ibrahim/srv/git/ugotours/tours.api/data/mongodb:/data/db \
+	-v /Users/ibrahim/srv/git/tourfax/tourfax.api/data/mongodb:/data/db \
     -e MONGO_INITDB_ROOT_USERNAME=admin \
     -e MONGO_INITDB_ROOT_PASSWORD=123456 \
 		-e MONGO_INITDB_DATABASE=tourfax \

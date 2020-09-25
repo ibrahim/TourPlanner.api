@@ -9,7 +9,7 @@ class GuidesContinentWorker
     continent = Guides::Continent.find(continent_id)
     continent.fetch_and_save_all
     continent.countries.each do |country|
-      GuidesCountryWorker.perform_async(country.id)
+      GuidesCountryWorker.new.perform(country.id)
     end
   end
 end

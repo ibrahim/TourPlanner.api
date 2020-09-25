@@ -12,10 +12,18 @@ require "action_view/railtie"
 require "action_cable/engine"
 require "sprockets/railtie"
 require "rails/test_unit/railtie"
+
 # require_relative "profiler"
 # Require the gems listed in Gemfile, including any gems
 # you've limited to :test, :development, or :production.
 Bundler.require(*Rails.groups)
+
+require 'vcr'
+
+VCR.configure do |c|
+  c.cassette_library_dir = 'cassettes'
+  c.hook_into :webmock 
+end
 
 module Api
   class Application < Rails::Application
@@ -52,6 +60,6 @@ module Api
       end 
     end 
     config.api_only = true
-    
+ 
   end
 end
